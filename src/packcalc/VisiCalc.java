@@ -1,4 +1,7 @@
 //dont forget header later
+//https://ask4knowledgebase.com/questions/30421875/can-t-connect-to-any-uri-error-while-commiting-code-from-eclipse-to-git-repository
+//https://www.jitendrazaa.com/blog/salesforce/authenticate-git-using-ssh-protocol-with-eclipse-and-egit-salesforce/
+//https://www.jitendrazaa.com/blog/salesforce/salesforce-git-eclipse-egit-better-and-distributed-source-control/
 package packcalc;
 import java.util.*;
 public class VisiCalc {
