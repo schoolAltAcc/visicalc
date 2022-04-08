@@ -21,18 +21,11 @@ public class VisiCalc {
 			//if quit then stop, otherwise go to main program
 			if(!input.equalsIgnoreCase("quit")) {
 				//main program
+				
+				//first we check for simple cmds like print, then we go to parse input method for complex cmds
 				if(input.equalsIgnoreCase("print")) {
 					//print grid
 					System.out.println(CellGrid);
-				}else if(input.indexOf(" = ") > -1) {
-					//not done
-					if(CellGrid.cmdType(input).equals("define")){
-						//yet to be implemented
-						System.out.println("Cell Defined");
-					}else {
-						//echo if not expression
-						System.out.println(input+"\n");
-					}
 				}else if(input.equalsIgnoreCase("strDemo")) {
 					//temp code to manaully create grid
 					Cell abe = new Cell();
@@ -49,7 +42,7 @@ public class VisiCalc {
 					System.out.println(CellGrid);
 				}else {
 					//echo input if not print or has =
-					System.out.println(input+"\n");
+					parseInput(input);
 				}
 			}else {
 				//if we type quit, tell main loop to start and print goodbye
@@ -60,6 +53,24 @@ public class VisiCalc {
 		//close scanner for resource preservation or something
 		in.close();
 
+	}
+	
+	public static String parseInput(String input){
+		//if we have equals
+		if(input.contains(" = ")) {
+			//have quotes? text cell
+			String[] cmdArray = input.split(" ");
+			if(input.contains(" \" ")) {
+				
+			}else if(input.contains("//")){//contains /? date cell
+			}else if(input.contains("(")&&input.contains(")")){//contains ()? formula cell
+			}else{//else cell
+				
+			}
+		//else check if its a cell index
+			//if is then we fetch display value from cell and print
+		}
+		return input;//echo input if all else fails
 	}
 
 }
