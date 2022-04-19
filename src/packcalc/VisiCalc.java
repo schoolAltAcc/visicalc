@@ -2,12 +2,12 @@
 //https://ask4knowledgebase.com/questions/30421875/can-t-connect-to-any-uri-error-while-commiting-code-from-eclipse-to-git-repository
 //https://www.jitendrazaa.com/blog/salesforce/authenticate-git-using-ssh-protocol-with-eclipse-and-egit-salesforce/
 //https://www.jitendrazaa.com/blog/salesforce/salesforce-git-eclipse-egit-better-and-distributed-source-control/
+//problem list:
+//currently text cells need to be defined with "text" and not as a if something goes wrong
 package packcalc;
 import java.util.*;
 public class VisiCalc {
-
-	static Grid CellGrid = new Grid();
-	
+	public static Grid CellGrid = new Grid();
 	public static void main(String[] args) {
 		Boolean done = false;
 		System.out.println("Welcome to Visual Calculator.");
@@ -43,7 +43,7 @@ public class VisiCalc {
 					System.out.println(CellGrid);
 				}else {
 					//echo input if not print or has =
-					System.out.println(parseInput(input));
+					parseInput(input);
 				}
 			}else {
 				//if we type quit, tell main loop to start and print goodbye
@@ -58,29 +58,29 @@ public class VisiCalc {
 	
 	public static String parseInput(String input){
 		//if we have equals
-		if(input.contains(" = ")) {
-			System.out.println("=");
+		String[] cmdArray = input.split(" ");
+		if(cmdArray[1].equals(" = ")) {
 			//have quotes? text cell
-			String[] cmdArray = input.split(" ");
 			if(input.contains(" \" ")) {
-				TextCell newtext = new TextCell(input.substring(input.indexOf(" \" ")+3,input.lastIndexOf(" \"")));
-				int[] loc = Grid.strToIndex(cmdArray[0]);
-				CellGrid.grid[loc[0]][loc[1]] = newtext;
-				return("Defined cell at" + cmdArray[0]);
+				int[] index = Grid.strToIndex(cmdArray[0]);
+				if(index[0] == -1 || index[1] == -1) {
+					return input; //error, index is inproper, relying on strtoindex for input parsing
+				}
+				//we are defining a text cell here because we got to this point
+				//we need to test for quotes
+				int fquote = input.indexOf("\'");
+				int lquote = input.indexOf("\'",fquote);
+				if(fquote == -1 || lquote == -1) {
+					return input;
+					//not given 2 quotes error
+				}
+				Cell definedTextCell = new TextCell(input.substring(fquote, lquote));
+				CellGrid.grid[index[0]][index[1]] = definedTextCell;
 			}else if(input.contains("//")){//contains /? date cell
-				String date = cmdArray[2];
-				DateCell newdate = new DateCell(date);
-				int[] loc = Grid.strToIndex(cmdArray[0]);
-				CellGrid.grid[loc[0]][loc[1]] = newdate;
-				return("Defined cell at" + cmdArray[0]);
+				
 			}else if(input.contains("(")&&input.contains(")")){//contains ()? formula cell
-				System.out.println("error");
 			}else{//else cell
-				String num = cmdArray[2];
-				Cell newcell = new Cell(Integer.parseInt(num));
-				int[] loc = Grid.strToIndex(cmdArray[0]);
-				CellGrid.grid[loc[0]][loc[1]] = newcell;
-				return("Defined cell at" + cmdArray[0]);
+				
 			}
 		//else check if its a cell index
 			//if is then we fetch display value from cell and print
