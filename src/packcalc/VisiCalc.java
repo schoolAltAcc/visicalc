@@ -59,20 +59,19 @@ public class VisiCalc {
 	public static String parseInput(String input){
 		//if we have equals
 		if(input.contains(" = ")) {
-			System.out.println("=");
 			//have quotes? text cell
 			String[] cmdArray = input.split(" ");
 			if(input.contains(" \" ")) {
-				TextCell newtext = new TextCell(input.substring(input.indexOf(" \" ")+3,input.lastIndexOf(" \"")));
+				TextCell newtext = new TextCell(input.substring(input.indexOf(" \" ")+3,input.lastIndexOf("\"")));
 				int[] loc = Grid.strToIndex(cmdArray[0]);
 				CellGrid.grid[loc[0]][loc[1]] = newtext;
-				return("Defined cell at" + cmdArray[0]);
-			}else if(input.contains("//")){//contains /? date cell
+				return("Defined text cell at " + cmdArray[0]);
+			}else if(input.contains("/")){//contains /? date cell
 				String date = cmdArray[2];
 				DateCell newdate = new DateCell(date);
 				int[] loc = Grid.strToIndex(cmdArray[0]);
 				CellGrid.grid[loc[0]][loc[1]] = newdate;
-				return("Defined cell at" + cmdArray[0]);
+				return("Defined date cell at " + cmdArray[0]);
 			}else if(input.contains("(")&&input.contains(")")){//contains ()? formula cell
 				System.out.println("error");
 			}else{//else cell
@@ -80,12 +79,11 @@ public class VisiCalc {
 				Cell newcell = new Cell(Integer.parseInt(num));
 				int[] loc = Grid.strToIndex(cmdArray[0]);
 				CellGrid.grid[loc[0]][loc[1]] = newcell;
-				return("Defined cell at" + cmdArray[0]);
+				return("Defined cell at " + cmdArray[0]);
 			}
 		//else check if its a cell index
 			//if is then we fetch display value from cell and print
 		}
 		return input;//echo input if all else fails
 	}
-
 }
