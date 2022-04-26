@@ -78,6 +78,7 @@ public class Grid {
 	
 	//returns the index given from string
 	public static int[] strToIndex(String string) {
+		string = string.toUpperCase();
 		int[] index = {-1,-1};
 		Character letter = string.charAt(0);
 		if(Character.getNumericValue('A') <= Character.getNumericValue(letter) && Character.getNumericValue('G') >= Character.getNumericValue(letter)) {
