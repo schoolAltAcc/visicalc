@@ -6,7 +6,7 @@ package packcalc;
 import java.util.*;
 public class VisiCalc {
 
-	static Grid CellGrid = new Grid();
+	public static Grid CellGrid = new Grid();
 	
 	public static void main(String[] args) {
 		Boolean done = false;
@@ -80,8 +80,10 @@ public class VisiCalc {
 				return("Defined date cell at " + cmdArray[0]);
 				
 			}else if(input.contains("(")&&input.contains(")")){//contains ()? formula cell
-				
-				System.out.println("error");
+				int[] loc = Grid.strToIndex(cmdArray[0]);
+				FormulaCell newform = new FormulaCell(input.substring(input.indexOf("(")+1, input.lastIndexOf(")")));
+				CellGrid.grid[loc[0]][loc[1]] = newform;
+				return("Defined text cell at " + cmdArray[0]);
 			}else{//else cell
 				
 				String num = cmdArray[2];
