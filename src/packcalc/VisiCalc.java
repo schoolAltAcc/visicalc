@@ -27,7 +27,7 @@ public class VisiCalc {
 				if(input.equalsIgnoreCase("print")) {
 					//print grid
 					System.out.println(CellGrid);
-				}else if(input.equalsIgnoreCase("strDemo")) {
+				}else if(input.equalsIgnoreCase("strDemo")) {//haha OLD
 					//temp code to manaully create grid
 					Cell abe = new Cell();
 					TextCell abe2 = new TextCell("12345");
@@ -40,6 +40,16 @@ public class VisiCalc {
 					CellGrid.grid[0][3] = abe4;
 					CellGrid.grid[0][4] = abe5;
 					//print grid
+					System.out.println(CellGrid);
+				}else if(input.equalsIgnoreCase("formDemo")) {//wow flashy new demo
+					System.out.println(parseInput("a1 = 8"));
+					System.out.println(parseInput("a2 = 7"));
+					System.out.println(parseInput("a3 = ( A1 + A2 )"));
+					//debug
+					System.out.println("debug3");
+					System.out.println(parseInput("C1 = ( A3 - 14 / 7 + 8 * 3.14 )")); //curse you mulvaney, why does it deal with a decimal
+					//debug
+					System.out.println("debug4");
 					System.out.println(CellGrid);
 				}else if(input.equalsIgnoreCase("clear")) {
 					CellGrid.clearAll();
@@ -83,7 +93,7 @@ public class VisiCalc {
 				int[] loc = Grid.strToIndex(cmdArray[0]);
 				FormulaCell newform = new FormulaCell(input.substring(input.indexOf("(")+1, input.lastIndexOf(")")));
 				CellGrid.grid[loc[0]][loc[1]] = newform;
-				return("Defined text cell at " + cmdArray[0]);
+				return("Defined formula cell at " + cmdArray[0]);
 			}else{//else cell
 				
 				String num = cmdArray[2];
