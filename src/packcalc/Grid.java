@@ -80,6 +80,9 @@ public class Grid {
 	public static int[] strToIndex(String string) {
 		string = string.toUpperCase();
 		int[] index = {-1,-1};
+		if(string.length() != 2) {
+			return index;
+		}
 		Character letter = string.charAt(0);
 		if(Character.getNumericValue('A') <= Character.getNumericValue(letter) && Character.getNumericValue('G') >= Character.getNumericValue(letter)) {
 			index[1] = "ABCDEFG".indexOf(letter);

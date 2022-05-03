@@ -45,11 +45,17 @@ public class VisiCalc {
 					System.out.println(parseInput("a1 = 8"));
 					System.out.println(parseInput("a2 = 7"));
 					System.out.println(parseInput("a3 = ( A1 + A2 )"));
-					//debug
-					System.out.println("debug3");
 					System.out.println(parseInput("C1 = ( A3 - 14 / 7 + 8 * 3.14 )")); //curse you mulvaney, why does it deal with a decimal
-					//debug
-					System.out.println("debug4");
+					System.out.println(CellGrid);
+				}else if(input.equalsIgnoreCase("formDemo2")) {
+					System.out.println(parseInput("A1 = 3"));
+					System.out.println(parseInput("A2 = 5"));
+					System.out.println(parseInput("A3 = -10"));
+					System.out.println(parseInput("B1 = ( A1 )"));
+					System.out.println(parseInput("B2 = ( A2 + 100 )"));
+					System.out.println(parseInput("B3 = ( A2 - A3 )"));
+					System.out.println(parseInput("C9 = ( A1 * A2 * A3 )"));
+					System.out.println(parseInput("C10 = ( A1 / A2 + A3 )"));
 					System.out.println(CellGrid);
 				}else if(input.equalsIgnoreCase("clear")) {
 					CellGrid.clearAll();
@@ -81,7 +87,7 @@ public class VisiCalc {
 				CellGrid.grid[loc[0]][loc[1]] = newtext;
 				return("Defined text cell at " + cmdArray[0]);
 				
-			}else if(input.contains("/")){//contains /? date cell
+			}else if(input.contains("/") && !input.contains("(")){//contains /? date cell
 				
 				String date = cmdArray[2];
 				DateCell newdate = new DateCell(date);
@@ -91,9 +97,13 @@ public class VisiCalc {
 				
 			}else if(input.contains("(")&&input.contains(")")){//contains ()? formula cell
 				int[] loc = Grid.strToIndex(cmdArray[0]);
-				FormulaCell newform = new FormulaCell(input.substring(input.indexOf("(")+1, input.lastIndexOf(")")));
-				CellGrid.grid[loc[0]][loc[1]] = newform;
-				return("Defined formula cell at " + cmdArray[0]);
+				if(loc[0] != -1 &&loc[1] != -1) {
+					FormulaCell newform = new FormulaCell(input.substring(input.indexOf("(")+1, input.lastIndexOf(")")));
+					CellGrid.grid[loc[0]][loc[1]] = newform;
+					return("Defined formula cell at " + cmdArray[0]);
+				}else {
+					return("Index Error");
+				}
 			}else{//else cell
 				
 				String num = cmdArray[2];

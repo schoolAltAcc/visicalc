@@ -18,8 +18,6 @@ public class FormulaCell extends Cell{
 
 	public FormulaCell(String substring) {
 		formula = strToArrayList(substring);
-		//debug
-		System.out.println("Debug6");
 		super.setValue(computeValue(formula));
 	}
 	
@@ -47,15 +45,13 @@ public class FormulaCell extends Cell{
 			//then find + or - 
 			formulaStrListAddSubOperation(formulaStrList);
 		}
-		output = Integer.parseInt(formulaStrList.get(0));
+		output = valuefy(formulaStrList.get(0));
 		return output;
 	}
 	
 	//methods of horror lie beyond -----------------------------------------------
 	private void formulaStrListAddSubOperation(ArrayList<String> formulaStrList) {
 		for(int i = 0; i < formulaStrList.size(); i++) {
-			//debug
-			System.out.println(formulaStrList);
 			if(formulaStrList.get(i).equals("+") || formulaStrList.get(i).equals("-")) {
 				if(formulaStrList.get(i) == "+") {
 					if(isValue(formulaStrList.get(i-1)) && isValue(formulaStrList.get(i+1))) {
@@ -86,7 +82,7 @@ public class FormulaCell extends Cell{
 						//formDemo error in logic bellow, middle element i gets removed due to being middle and only having 1 element before it. Fix issue at school
 						formulaStrList.remove(i-1);
 						formulaStrList.remove(i-1);
-						formulaStrList.remove(i-1);
+						//formulaStrList.remove(i-1);
 					}
 				}
 			}
@@ -125,7 +121,7 @@ public class FormulaCell extends Cell{
 							formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) / valuefy(formulaStrList.get(i-1)))).toString());
 							formulaStrList.remove(i-1);
 							formulaStrList.remove(i-1);
-							formulaStrList.remove(i-1);
+							//formulaStrList.remove(i-1);
 						}
 					}
 				}
