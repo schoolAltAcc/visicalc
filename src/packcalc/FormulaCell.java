@@ -13,7 +13,7 @@ public class FormulaCell extends Cell{
 	
 	public String toString() {
 		Integer value = computeValue(formula);
-		return value.toString();
+		return "|"+cutOrPad(value.toString())+"|";
 	}
 
 	public FormulaCell(String substring) {
