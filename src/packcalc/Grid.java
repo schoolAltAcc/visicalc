@@ -80,7 +80,7 @@ public class Grid {
 	public static int[] strToIndex(String string) {
 		string = string.toUpperCase();
 		int[] index = {-1,-1};
-		if(string.length() != 2) {
+		if(string.length() == 1 ||string.length() > 3) {
 			return index;
 		}
 		Character letter = string.charAt(0);

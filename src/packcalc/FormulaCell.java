@@ -41,7 +41,7 @@ public class FormulaCell extends Cell{
 			//find first / or *
 			formulaStrListMultDivOperation(formulaStrList);
 		}
-		while(formulaStrList.toString().contains("+") || formulaStrList.toString().contains("-")) {
+		while(formulaStrList.toString().contains("+") || (formulaStrList.toString().contains("-") && formulaStrList.size() >= 3)) {
 			//then find + or - 
 			formulaStrListAddSubOperation(formulaStrList);
 		}
@@ -53,36 +53,17 @@ public class FormulaCell extends Cell{
 	private void formulaStrListAddSubOperation(ArrayList<String> formulaStrList) {
 		for(int i = 0; i < formulaStrList.size(); i++) {
 			if(formulaStrList.get(i).equals("+") || formulaStrList.get(i).equals("-")) {
-				if(formulaStrList.get(i) == "+") {
+				if(formulaStrList.get(i).equals("+")) {
 					if(isValue(formulaStrList.get(i-1)) && isValue(formulaStrList.get(i+1))) {
-						formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) + valuefy(formulaStrList.get(i-1)))).toString());
-						//[a,a,a,A,B,C,a,a]
-						// 0 1 2 3 4 5 6 7
-						//         ^
-						//
+						formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) + valuefy(formulaStrList.get(i+1)))).toString());
 						formulaStrList.remove(i-1);
-						//[a,a,a,B,C,a,a]
-						// 0 1 2 3 4 5 6
-						//         ^
-						//
-						formulaStrList.remove(i-1);
-						//[a,a,a,C,a,a]
-						// 0 1 2 3 4 5
-						//         ^
-						//
-						formulaStrList.remove(i-1);
-						//[a,a,a,a,a]
-						// 0 1 2 3 4
-						//         ^
-						//
+						formulaStrList.remove(i);
 					}
 				}else {
 					if(isValue(formulaStrList.get(i-1)) && isValue(formulaStrList.get(i+1))) {
-						formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) - valuefy(formulaStrList.get(i-1)))).toString());
-						//formDemo error in logic bellow, middle element i gets removed due to being middle and only having 1 element before it. Fix issue at school
+						formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) - valuefy(formulaStrList.get(i+1)))).toString());
 						formulaStrList.remove(i-1);
-						formulaStrList.remove(i-1);
-						//formulaStrList.remove(i-1);
+						formulaStrList.remove(i);
 					}
 				}
 			}
@@ -93,35 +74,17 @@ public class FormulaCell extends Cell{
 	private void formulaStrListMultDivOperation(ArrayList<String> formulaStrList) {	
 			for(int i = 0; i < formulaStrList.size(); i++) {
 				if(formulaStrList.get(i).equals("*") || formulaStrList.get(i).equals("/")) {
-					if(formulaStrList.get(i) == "*") {
+					if(formulaStrList.get(i).equals("*")) {
 						if(isValue(formulaStrList.get(i-1)) && isValue(formulaStrList.get(i+1))) {
-							formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) * valuefy(formulaStrList.get(i-1)))).toString());
-							//[a,a,a,A,B,C,a,a]
-							// 0 1 2 3 4 5 6 7
-							//         ^
-							//
+							formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) * valuefy(formulaStrList.get(i+1)))).toString());
 							formulaStrList.remove(i-1);
-							//[a,a,a,B,C,a,a]
-							// 0 1 2 3 4 5 6
-							//         ^
-							//
-							formulaStrList.remove(i-1);
-							//[a,a,a,C,a,a]
-							// 0 1 2 3 4 5
-							//         ^
-							//
-							formulaStrList.remove(i-1);
-							//[a,a,a,a,a]
-							// 0 1 2 3 4
-							//         ^
-							//
+							formulaStrList.remove(i);
 						}
 					}else {
 						if(isValue(formulaStrList.get(i-1)) && isValue(formulaStrList.get(i+1))) {
-							formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) / valuefy(formulaStrList.get(i-1)))).toString());
+							formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) / valuefy(formulaStrList.get(i+1)))).toString());
 							formulaStrList.remove(i-1);
-							formulaStrList.remove(i-1);
-							//formulaStrList.remove(i-1);
+							formulaStrList.remove(i);
 						}
 					}
 				}
@@ -146,7 +109,7 @@ public class FormulaCell extends Cell{
 		int[] index = Grid.strToIndex(string);
 		if(index[0] == -1 || index[1] == -1) {
 			for(char e : string.toCharArray()) {
-				if(!Character.isDigit(e)) {
+				if(!Character.isDigit(e) && e != '-') { //can cause error for #s like 1230-32
 					return false;
 				}
 			}
