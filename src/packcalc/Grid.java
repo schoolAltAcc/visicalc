@@ -88,6 +88,9 @@ public class Grid {
 			index[1] = "ABCDEFG".indexOf(letter);
 		}
 		//get last string to num
+		if(string.substring(1).contains(".")) {
+			return index;
+		}
 		index[0] = Integer.parseInt(string.substring(1))-1;
 		return index;
 	}

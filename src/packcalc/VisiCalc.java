@@ -2,6 +2,7 @@
 //https://ask4knowledgebase.com/questions/30421875/can-t-connect-to-any-uri-error-while-commiting-code-from-eclipse-to-git-repository
 //https://www.jitendrazaa.com/blog/salesforce/authenticate-git-using-ssh-protocol-with-eclipse-and-egit-salesforce/
 //https://www.jitendrazaa.com/blog/salesforce/salesforce-git-eclipse-egit-better-and-distributed-source-control/
+//WARNING NEED TO ADD A DECIMAL COMPATIBILITY AHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHG
 package packcalc;
 import java.util.*;
 public class VisiCalc {
@@ -41,11 +42,11 @@ public class VisiCalc {
 					CellGrid.grid[0][4] = abe5;
 					//print grid
 					System.out.println(CellGrid);
-				}else if(input.equalsIgnoreCase("formDemo")) {//wow flashy new demo
+				}else if(input.equalsIgnoreCase("formDemo")) {
 					System.out.println(parseInput("a1 = 8"));
 					System.out.println(parseInput("a2 = 7"));
 					System.out.println(parseInput("a3 = ( A1 + A2 )"));
-					System.out.println(parseInput("C1 = ( A3 - 14 / 7 + 8 * 3.14 )")); //curse you mulvaney, why does it deal with a decimal
+					System.out.println(parseInput("C1 = ( A3 - 14 / 7 + 8 * 3.14 )"));
 					System.out.println(CellGrid);
 				}else if(input.equalsIgnoreCase("formDemo2")) {
 					System.out.println(parseInput("A1 = 3"));
@@ -55,7 +56,7 @@ public class VisiCalc {
 					System.out.println(parseInput("B2 = ( A2 + 100 )"));
 					System.out.println(parseInput("B3 = ( A2 - A3 )"));
 					System.out.println(parseInput("C9 = ( A1 * A2 * A3 )"));
-					System.out.println(parseInput("C10 = ( A1 / A2 + A3 )"));
+					System.out.println(parseInput("C10 = ( A3 / A2 + A3 )")); //C10 = ( A1 / A2 + A3 )
 					System.out.println(CellGrid);
 				}else if(input.equalsIgnoreCase("clear")) {
 					CellGrid.clearAll();

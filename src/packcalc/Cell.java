@@ -3,7 +3,7 @@ package packcalc;
 public class Cell {
 	static final int textLength = 10;
 	String displayValue = generateSpaces(textLength);
-	private int value = 0;
+	private double value = 0;
 	
 	public Cell() {
 		//we dont do anything
@@ -57,22 +57,16 @@ public class Cell {
 		this.displayValue = cutOrPad(y.toString());
 	}
 	
-	public int getValue() {
+	public double getValue() {
 		return(value);
 	}
-	/*just in case i messed up later
-	if(input.length() > textLength || input.length() < textLength) {
-		if(input.length() > textLength) {
-			//cutoff string for display text.substring(0, text.length() - 2)
-			int difference = input.length() - textLength;
-			displayValue = input.substring(0, input.length() - difference);
+	
+	public void setValue(Double x) {
+		if(x%1==0) {
+			setValue(x.intValue());
 		}else {
-			//pad string for display String.format("%1$-" + length + "s", inputString).replace(' ', '0')
-			int difference = textLength - input.length();
-			displayValue = input + Cell.generateSpaces(difference);
+			this.value = x;
+			this.displayValue = cutOrPad(x.toString());
 		}
-	}else {
-		displayValue = input;
 	}
-	*/
 }

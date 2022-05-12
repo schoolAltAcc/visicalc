@@ -12,8 +12,9 @@ public class FormulaCell extends Cell{
 	ArrayList<String> formula = new ArrayList<String>();
 	
 	public String toString() {
-		Integer value = computeValue(formula);
-		return "|"+cutOrPad(value.toString())+"|";
+		Double value = computeValue(formula);
+		super.setValue(value);
+		return super.toString();
 	}
 
 	public FormulaCell(String substring) {
@@ -35,8 +36,8 @@ public class FormulaCell extends Cell{
 	}
 
 	//some kind of infinite loop occurs
-	public int computeValue(ArrayList<String> formulaStrList) {
-		int output = 0;
+	public Double computeValue(ArrayList<String> formulaStrList) {
+		Double output = 0.0;
 		while(formulaStrList.toString().contains("/") || formulaStrList.toString().contains("*")) {
 			//find first / or *
 			formulaStrListMultDivOperation(formulaStrList);
@@ -55,13 +56,13 @@ public class FormulaCell extends Cell{
 			if(formulaStrList.get(i).equals("+") || formulaStrList.get(i).equals("-")) {
 				if(formulaStrList.get(i).equals("+")) {
 					if(isValue(formulaStrList.get(i-1)) && isValue(formulaStrList.get(i+1))) {
-						formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) + valuefy(formulaStrList.get(i+1)))).toString());
+						formulaStrList.set(i,((Double)(valuefy(formulaStrList.get(i-1)) + valuefy(formulaStrList.get(i+1)))).toString());
 						formulaStrList.remove(i-1);
 						formulaStrList.remove(i);
 					}
 				}else {
 					if(isValue(formulaStrList.get(i-1)) && isValue(formulaStrList.get(i+1))) {
-						formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) - valuefy(formulaStrList.get(i+1)))).toString());
+						formulaStrList.set(i,((Double)(valuefy(formulaStrList.get(i-1)) - valuefy(formulaStrList.get(i+1)))).toString());
 						formulaStrList.remove(i-1);
 						formulaStrList.remove(i);
 					}
@@ -76,13 +77,13 @@ public class FormulaCell extends Cell{
 				if(formulaStrList.get(i).equals("*") || formulaStrList.get(i).equals("/")) {
 					if(formulaStrList.get(i).equals("*")) {
 						if(isValue(formulaStrList.get(i-1)) && isValue(formulaStrList.get(i+1))) {
-							formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) * valuefy(formulaStrList.get(i+1)))).toString());
+							formulaStrList.set(i,((Double)(valuefy(formulaStrList.get(i-1)) * valuefy(formulaStrList.get(i+1)))).toString());
 							formulaStrList.remove(i-1);
 							formulaStrList.remove(i);
 						}
 					}else {
 						if(isValue(formulaStrList.get(i-1)) && isValue(formulaStrList.get(i+1))) {
-							formulaStrList.set(i,((Integer)(valuefy(formulaStrList.get(i-1)) / valuefy(formulaStrList.get(i+1)))).toString());
+							formulaStrList.set(i,((Double)(valuefy(formulaStrList.get(i-1)) / valuefy(formulaStrList.get(i+1)))).toString());
 							formulaStrList.remove(i-1);
 							formulaStrList.remove(i);
 						}
@@ -92,7 +93,10 @@ public class FormulaCell extends Cell{
 		}
 	//methods of horror lie above ------------------------------------------------
 	
-	private Integer valuefy(String string) {
+	private double valuefy(String string) {
+		if(string.equals("1.0")) {
+			System.out.println();
+		}
 		if(!isValue(string)) {
 			return 0;
 		}
@@ -101,7 +105,7 @@ public class FormulaCell extends Cell{
 		if(index[0] != -1 && index[1] != -1) {
 			return VisiCalc.CellGrid.grid[index[0]][index[1]].getValue();
 		}else {
-			return Integer.parseInt(string);
+			return Double.parseDouble(string);
 		}
 	}
 
@@ -109,7 +113,7 @@ public class FormulaCell extends Cell{
 		int[] index = Grid.strToIndex(string);
 		if(index[0] == -1 || index[1] == -1) {
 			for(char e : string.toCharArray()) {
-				if(!Character.isDigit(e) && e != '-') { //can cause error for #s like 1230-32
+				if(!Character.isDigit(e) && e != '-'&& e != '.') { //can cause error for #s like 1230-32
 					return false;
 				}
 			}
