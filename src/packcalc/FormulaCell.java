@@ -2,6 +2,7 @@ package packcalc;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class FormulaCell extends Cell{
 	
@@ -28,7 +29,13 @@ public class FormulaCell extends Cell{
 		Scanner parser = new Scanner(substring);
 		
 		while(parser.hasNext()) {
-			output.add(parser.next());
+			String temp = parser.next();
+			if(temp.equals("SUM") || temp.equals("AVG")) {
+				output.add(temp + parser.next() + parser.next() + parser.next()); //no input error check, not my fault if issue
+			}else {
+				output.add(temp);
+			}
+			
 		}
 		parser.close();
 		
@@ -94,8 +101,32 @@ public class FormulaCell extends Cell{
 	//methods of horror lie above ------------------------------------------------
 	
 	private double valuefy(String string) {
-		if(string.equals("1.0")) {
-			System.out.println();
+		if(string.contains("AVG") || string.contains("SUM")) {
+			String[] strings = string.split(" ");
+			int[] index = {-1,-1};
+			int[] index2 = {-1,-1};
+			for(int i = 0; i < strings.length; i++) {
+				if(Pattern.matches("[a-zA-Z][0-9]+", strings[i])) {
+					if(index[0] == -1) {
+						index = Grid.strToIndex(strings[i]);
+					}else if(index2[0] == -1) {
+						index2 = Grid.strToIndex(strings[i]);
+					}else {
+						System.out.println("AHHHHHHHHHHH");
+						return 0.0;
+					}
+				}
+			}
+			double[] values = Grid.fetchElements(index,index2);
+			double total = 0;
+			for(Double e : values) {
+				total += e;
+			}
+			if(string.contains("SUM")) {
+				return total;
+			}else{
+				return total/values.length;
+			}
 		}
 		if(!isValue(string)) {
 			return 0;

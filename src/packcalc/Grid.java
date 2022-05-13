@@ -94,5 +94,18 @@ public class Grid {
 		index[0] = Integer.parseInt(string.substring(1))-1;
 		return index;
 	}
+
+	public static double[] fetchElements(int[] sindex, int[] lindex) {
+		System.out.printf("%d - %d * %d - %d\n",lindex[0],sindex[0],lindex[1],sindex[1]);
+		double[] output = new double[(lindex[0]-sindex[0])*(lindex[1]-sindex[1])];
+		int x = 0;
+		for(int i = sindex[0]; i < lindex[0];i++) {
+			for(int j = sindex[1]; j < lindex[1];j++) {
+				output[x] = (VisiCalc.CellGrid.grid[i][j].getValue());
+				x++;
+			}
+		}
+		return output;
+	}
 			
 }

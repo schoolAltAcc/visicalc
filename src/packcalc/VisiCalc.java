@@ -58,6 +58,16 @@ public class VisiCalc {
 					System.out.println(parseInput("C9 = ( A1 * A2 * A3 )"));
 					System.out.println(parseInput("C10 = ( A3 / A2 + A3 )")); //C10 = ( A1 / A2 + A3 )
 					System.out.println(CellGrid);
+				}else if(input.equalsIgnoreCase("sumavgDemo")) {
+					System.out.println(parseInput("B5 = 11"));
+					System.out.println(parseInput("B6 = 39"));
+					System.out.println(parseInput("B7 = -400"));
+					System.out.println(parseInput("C5 = 0"));
+					System.out.println(parseInput("D5 = 7"));
+					System.out.println(parseInput("E7 = ( SUM B5 - B7 )"));
+					System.out.println(parseInput("E8 = ( AVG B5 - D5 )"));
+					System.out.println(CellGrid);
+					
 				}else if(input.equalsIgnoreCase("clear")) {
 					CellGrid.clearAll();
 				}else {
