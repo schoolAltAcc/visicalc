@@ -109,7 +109,8 @@ public class VisiCalc {
 			}else if(input.contains("(")&&input.contains(")")){//contains ()? formula cell
 				int[] loc = Grid.strToIndex(cmdArray[0]);
 				if(loc[0] != -1 &&loc[1] != -1) {
-					FormulaCell newform = new FormulaCell(input.substring(input.indexOf("(")+1, input.lastIndexOf(")")));
+					String a = input.substring(input.indexOf("(")+1, input.lastIndexOf(")"));
+					FormulaCell newform = new FormulaCell(a);
 					CellGrid.grid[loc[0]][loc[1]] = newform;
 					return("Defined formula cell at " + cmdArray[0]);
 				}else {

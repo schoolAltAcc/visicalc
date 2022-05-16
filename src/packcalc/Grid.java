@@ -84,14 +84,15 @@ public class Grid {
 			return index;
 		}
 		Character letter = string.charAt(0);
-		if(Character.getNumericValue('A') <= Character.getNumericValue(letter) && Character.getNumericValue('G') >= Character.getNumericValue(letter)) {
-			index[1] = "ABCDEFG".indexOf(letter);
-		}
+		index[1] = "ABCDEFG".indexOf(letter);
 		//get last string to num
 		if(string.substring(1).contains(".")) {
 			return index;
 		}
-		index[0] = Integer.parseInt(string.substring(1))-1;
+		letter = string.charAt(1);
+		if(Character.isDigit(letter)) {
+			index[0] = Integer.parseInt(string.substring(1))-1;
+		}
 		return index;
 	}
 

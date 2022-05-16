@@ -30,7 +30,7 @@ public class FormulaCell extends Cell{
 		while(parser.hasNext()) {
 			String temp = parser.next();
 			if(temp.equals("SUM") || temp.equals("AVG")) {
-				output.add(temp + parser.next() + parser.next() + parser.next()); //no input error check, not my fault if issue
+				output.add(temp + " " + parser.next() + " " + parser.next() + " " + parser.next()); //no input error check, not my fault if issue
 			}else {
 				output.add(temp);
 			}
