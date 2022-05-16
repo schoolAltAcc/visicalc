@@ -2,7 +2,6 @@ package packcalc;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class FormulaCell extends Cell{
 	
@@ -106,7 +105,7 @@ public class FormulaCell extends Cell{
 			int[] index = {-1,-1};
 			int[] index2 = {-1,-1};
 			for(int i = 0; i < strings.length; i++) {
-				if(Pattern.matches("[a-zA-Z][0-9]+", strings[i])) {
+				if(Grid.isIndex(strings[i])) {
 					if(index[0] == -1) {
 						index = Grid.strToIndex(strings[i]);
 					}else if(index2[0] == -1) {

@@ -95,6 +95,10 @@ public class Grid {
 		return index;
 	}
 
+	public static boolean isIndex(String string) {
+		int[] index = strToIndex(string);
+		return(index[0] != -1 && index[1] != -1);
+	}
 	public static double[] fetchElements(int[] sindex, int[] lindex) {
 		System.out.printf("%d - %d * %d - %d\n",lindex[0],sindex[0],lindex[1],sindex[1]);
 		double[] output = new double[(lindex[0]-sindex[0])*(lindex[1]-sindex[1])];
