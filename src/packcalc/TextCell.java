@@ -15,4 +15,8 @@ public class TextCell extends Cell{
 	public static String cutOrPad(String input) {
 		return(TextCell.cutOrPad(input,textLength));
 	}
+	
+	public int type() {
+		return 1;
+	}
 }

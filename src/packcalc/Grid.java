@@ -1,5 +1,7 @@
 package packcalc;
 
+import java.util.Arrays;
+
 public class Grid {
 	// class that is an array of cells, has to string
 	final int columns = 7;
@@ -100,17 +102,62 @@ public class Grid {
 		int[] index = strToIndex(string);
 		return(index[0] != -1 && index[1] != -1);
 	}
-	public static double[] fetchElements(int[] sindex, int[] lindex) {
-		System.out.printf("%d - %d * %d - %d\n",lindex[0],sindex[0],lindex[1],sindex[1]);
-		double[] output = new double[(lindex[0]-sindex[0])*(lindex[1]-sindex[1])];
+	
+	public static boolean isIndex(int[] index) {
+		if(index.length != 2) {
+			return false;
+		}else if(index[0] == -1 || index[1] == -1) {
+			return false;
+		}
+		return true;
+	}
+	public static Cell[] fetchElements(int[] sindex, int[] lindex) {//{4,1},{6,1} y,x because i had error in strtoindex when i first wrote it and it continues to this day
+		Cell[] output = new Cell[(lindex[0]-sindex[0]+1)*((lindex[1]-sindex[1])+1)];//+1 ?
 		int x = 0;
-		for(int i = sindex[0]; i < lindex[0];i++) {
-			for(int j = sindex[1]; j < lindex[1];j++) {
-				output[x] = (VisiCalc.CellGrid.grid[i][j].getValue());
+		for(int i = sindex[1]; i <= lindex[1];i++) {
+			for(int j = sindex[0]; j <= lindex[0];j++) {
+				output[x] = VisiCalc.CellGrid.grid[j][i];
 				x++;
 			}
 		}
 		return output;
 	}
-			
+	
+	public static double[] fetchElementsValues(int[] sindex, int[] lindex) {//{4,1},{6,1} y,x because i had error in strtoindex when i first wrote it and it continues to this day
+		double[] output = new double[(lindex[0]-sindex[0]+1)*((lindex[1]-sindex[1])+1)];//+1 ?
+		int x = 0;
+		for(int i = sindex[1]; i <= lindex[1];i++) {
+			for(int j = sindex[0]; j <= lindex[0];j++) {
+				output[x] = (VisiCalc.CellGrid.grid[j][i].getValue());
+				x++;
+			}
+		}
+		return output;
+	}
+	
+	public static void sorta(int[] sindex, int[] lindex) {
+		Cell[] list = fetchElements(sindex,lindex);
+		Arrays.sort(list);
+		int x = 0;
+		for(int i = sindex[1]; i <= lindex[1];i++) {
+			for(int j = sindex[0]; j <= lindex[0];j++) {
+				VisiCalc.CellGrid.grid[j][i] = list[x];
+				x++;
+			}
+		}
+		
+	}
+	
+	public static void sortd(int[] sindex, int[] lindex) {
+		Cell[] list = fetchElements(sindex,lindex);
+		Arrays.sort(list);
+		int x = 0;
+		for(int i = lindex[1]; i >= sindex[1];i--) {
+			for(int j = lindex[0]; j >= sindex[0];j--) {
+				VisiCalc.CellGrid.grid[j][i] = list[x];
+				x++;
+			}
+		}
+		
+	}		
 }

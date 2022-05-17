@@ -28,4 +28,8 @@ public class DateCell extends Cell{
 	public String cutOrPad() {
 		return String.format("%02d/%02d/%04d",this.month,this.day,this.year);
 	}
+	
+	public int type() {
+		return 2;
+	}
 }

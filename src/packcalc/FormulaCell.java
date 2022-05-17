@@ -46,18 +46,18 @@ public class FormulaCell extends Cell{
 		Double output = 0.0;
 		while(formulaStrList.toString().contains("/") || formulaStrList.toString().contains("*")) {
 			//find first / or *
-			formulaStrListMultDivOperation(formulaStrList);
+			mult_Div(formulaStrList);
 		}
 		while(formulaStrList.toString().contains("+") || (formulaStrList.toString().contains("-") && formulaStrList.size() >= 3)) {
 			//then find + or - 
-			formulaStrListAddSubOperation(formulaStrList);
+			add_Sub(formulaStrList);
 		}
 		output = valuefy(formulaStrList.get(0));
 		return output;
 	}
 	
 	//methods of horror lie beyond -----------------------------------------------
-	private void formulaStrListAddSubOperation(ArrayList<String> formulaStrList) {
+	private void add_Sub(ArrayList<String> formulaStrList) {
 		for(int i = 0; i < formulaStrList.size(); i++) {
 			if(formulaStrList.get(i).equals("+") || formulaStrList.get(i).equals("-")) {
 				if(formulaStrList.get(i).equals("+")) {
@@ -78,7 +78,7 @@ public class FormulaCell extends Cell{
 		//error
 	}
 
-	private void formulaStrListMultDivOperation(ArrayList<String> formulaStrList) {	
+	private void mult_Div(ArrayList<String> formulaStrList) {	
 			for(int i = 0; i < formulaStrList.size(); i++) {
 				if(formulaStrList.get(i).equals("*") || formulaStrList.get(i).equals("/")) {
 					if(formulaStrList.get(i).equals("*")) {
@@ -111,12 +111,12 @@ public class FormulaCell extends Cell{
 					}else if(index2[0] == -1) {
 						index2 = Grid.strToIndex(strings[i]);
 					}else {
-						System.out.println("AHHHHHHHHHHH");
+						System.out.println("Error: Inserted too many indexes");
 						return 0.0;
 					}
 				}
 			}
-			double[] values = Grid.fetchElements(index,index2);
+			double[] values = Grid.fetchElementsValues(index,index2);
 			double total = 0;
 			for(Double e : values) {
 				total += e;
@@ -149,5 +149,9 @@ public class FormulaCell extends Cell{
 			}
 		}
 		return true;
+	}
+	
+	public int type() {
+		return 3;
 	}
 }
