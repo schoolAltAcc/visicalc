@@ -20,12 +20,14 @@ public class DateCell extends Cell{
 			this.day = Integer.parseInt(epic[1]);
 			this.year = Integer.parseInt(epic[2]);
 		}else {
+			//to few / in the string, if too many we just take first 3 values so techincally 06/02/2002/200002 is valid
 			System.out.println("Error assigning date cell: split operation failure.");
 		}
 		super.displayValue = cutOrPad();
 	}
 	//make function to take in month day and year and give display string
 	public String cutOrPad() {
+		//cool formater
 		return String.format("%02d/%02d/%04d",this.month,this.day,this.year);
 	}
 	

@@ -1,6 +1,7 @@
 package packcalc;
 
 public class TextCell extends Cell{
+	//self explanatory, no comments needed in my eyes
 	String textValue = "";
 	
 	public TextCell(String input) {

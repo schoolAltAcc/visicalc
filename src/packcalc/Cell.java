@@ -1,7 +1,9 @@
 package packcalc;
 
 public class Cell implements Comparable<Cell>{
+	//max text length in console
 	static int textLength = 10;
+	//display value printed to console
 	String displayValue = generateSpaces(textLength);
 	private double value = 0;
 	
@@ -22,6 +24,7 @@ public class Cell implements Comparable<Cell>{
 	}
 	
 	public static String generateSpaces(int length) {
+		//formater that returns the amount of spaces indicated by length
 		return String.format("%"+ length +"s", " ");
 	}
 	
@@ -49,7 +52,9 @@ public class Cell implements Comparable<Cell>{
 	public static String printLikeCell(String input) {
 		return("|"+cutOrPad(input)+"|");
 	}
-	
+
+	public double getValue() {return(value);}
+
 	public void setValue(Integer x) {
 		this.value = x;
 		this.displayValue = cutOrPad(x.toString());
@@ -61,11 +66,8 @@ public class Cell implements Comparable<Cell>{
 		this.displayValue = cutOrPad(y.toString());
 	}
 	
-	public double getValue() {
-		return(value);
-	}
-	
 	public void setValue(Double x) {
+		//if x.0 then we set it as an int
 		if(x%1==0) {
 			setValue(x.intValue());
 		}else {
@@ -75,31 +77,37 @@ public class Cell implements Comparable<Cell>{
 	}
 	
 	public int type() {
+		//if displays like null it is null
 		if(this.displayValue.equals(generateSpaces(textLength))){
-			return 4;
+			return -1;
 		}
 		return 0;
 	}
 	
 	public int compareTo(Cell other) {
-		//number 0, text 1, date 2, formula 3, empty 4
+		//empty -1, number 0, text 1, date 2, formula 3
 		int x = this.type();
 		int y = other.type();
 		//return pos if in order
 		//zero if equal
 		//-1 if out of order
+		//if the cells are same
 		if(x==y) {
-			if(x==4) {
+			//dont compare null
+			if(x==-1) {
 				return 0;
 			}
+			//bigger number first
 			if(x == 0) {
 				return (int) (other.value-this.value);
 			}
+			//longer text first
 			if(x == 1) {
 				TextCell t = (TextCell)this;
 				TextCell r = (TextCell)other;
 				return (int) (r.textValue.length()-t.textValue.length());
 			}
+			//bigger date first
 			if(x == 2) {
 				DateCell t = (DateCell)this;
 				DateCell r = (DateCell)other;
@@ -111,13 +119,14 @@ public class Cell implements Comparable<Cell>{
 				}
 				return(r.year-t.year);
 			}
+			//length of display value first
 			if(x ==3){
 				FormulaCell t = (FormulaCell)this;
 				FormulaCell r = (FormulaCell)other;
 				return(r.displayValue.length()-t.displayValue.length());//checks previously evaluated value, not evaluating new value
 			}
 		}
-		
+		//else place in cell order
 		return(x-y);
 	}
 }

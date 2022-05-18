@@ -1,8 +1,6 @@
-//don't forget header later
-//https://ask4knowledgebase.com/questions/30421875/can-t-connect-to-any-uri-error-while-commiting-code-from-eclipse-to-git-repository
-//https://www.jitendrazaa.com/blog/salesforce/authenticate-git-using-ssh-protocol-with-eclipse-and-egit-salesforce/
-//https://www.jitendrazaa.com/blog/salesforce/salesforce-git-eclipse-egit-better-and-distributed-source-control/
-//WARNING NEED TO ADD A DECIMAL COMPATIBILITY AHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHGHG
+//Artem Semenov
+//Period 7 Ap CS
+//Visicalc - Finished
 package packcalc;
 import java.util.*;
 public class VisiCalc {
@@ -131,8 +129,8 @@ public class VisiCalc {
 	}
 	
 	public static void help() {
-		System.out.println("Welcome to Visicalc!\nHere are some available cmds");
-		System.out.println("A1 = 1");
+		System.out.println("\n--------------\nWelcome to Visicalc!\nHere are some available cmds (no case sensitivity available for those who like to live on the edge, but not recommended)");
+		System.out.println("A1 = 1\nA1");
 		System.out.println("A1 = -12.0");
 		System.out.println("A1 = \" text\"");
 		System.out.println("A1 = 06//20//2020");
@@ -145,6 +143,14 @@ public class VisiCalc {
 		System.out.println("CLEAR A1");
 		System.out.println("CLEAR");
 		System.out.println("PRINT");
+		System.out.println("QUIT");
+		System.out.println("\n--------------\nAlso have some demos:\n--------------\n");
+		System.out.println("strDemo");
+		System.out.println("formDemo");
+		System.out.println("formDemo2");
+		System.out.println("sumavgDemo");
+		System.out.println("sortademo");
+		System.out.println("sortbdemo\n--------------\n");
 	}
 
 	//main input parser for complicated methods (cant be evauluated with .equalsignorecase echos input if error
@@ -245,6 +251,9 @@ public class VisiCalc {
 				Grid.sortd(index, index2);
 			}
 			return("Sorted Elements!");
+		}else if(Grid.isIndex(upercaseInput)){
+			int[] loc = Grid.strToIndex(upercaseInput);
+			return(Cell.printLikeCell(CellGrid.grid[loc[0]][loc[1]].displayValue));
 		}
 		return input;//echo input if all else fails
 	}
